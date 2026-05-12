@@ -5,19 +5,30 @@ import React from 'react'
 function ChatInput({ chatMessages, setChatMessages }) {
   const [inputText, setInputText] = React.useState('');
   function sendMessage (){
-        setChatMessages([
-      ...chatMessages,
+    const newChatMessages = [
+          ...chatMessages,
+          {
+            id: crypto.randomUUID(),
+            message: inputText,
+            sender: 'user'
+          }
+        ];
+    setChatMessages(newChatMessages);
+    const response = window.Chatbot.getResponse(inputText);
+    // use updated copy to rerender
+      setChatMessages([
+      ...newChatMessages,
       {
         id: crypto.randomUUID(),
-        message: inputText,
-        sender: 'user'
+        message: response,
+        sender: 'bot'
       }
-    ]);
+      ]);
     // clears input field
     setInputText('');
   }
   return (
-    <>
+    <div className="input-container">
       <input 
         placeholder="Send a message to Chatbot" 
         size="30"
@@ -25,9 +36,14 @@ function ChatInput({ chatMessages, setChatMessages }) {
         onChange={(e) => {
           setInputText(e.target.value);
         }}
+        className="chat-input"
       />
-      <button onClick={sendMessage}>Send</button>
-    </>
+      <button 
+      onClick={sendMessage}
+      className="send-btn"
+      >Send
+      </button>
+    </div>
   )
 }
 
@@ -40,7 +56,7 @@ function ChatMessage({message, sender})
         )}
       {message}
       {sender === "user" && (
-        <img src="./src/assets/userphoto.png" width="50"/>
+        <img src="./src/assets/user.jpg" width="50"/>
         )}
     </div>
   ) 
@@ -89,7 +105,7 @@ function App() {
   ]);
   // (Array Destructure) const [chatMessages, setChatMessages] = array;
   return (
-    <>
+    <div>
       <ChatInput 
       chatMessages={chatMessages}
       setChatMessages={setChatMessages}
@@ -97,10 +113,10 @@ function App() {
       <ChatMessages 
       chatMessages={chatMessages}
       />
-    </>
+    </div>
   );
 }
-
-const container = document.querySelector("#root");
-ReactDOM.createRoot(container).render(<App />);
 export {ChatInput, ChatMessage};
+const container = document.getElementById("root");
+const root = ReactDOM.createRoot(container);
+root.render(<App />);
