@@ -50,13 +50,17 @@ function ChatInput({ chatMessages, setChatMessages }) {
 function ChatMessage({message, sender})
 {
     return (
-    <div>
+    <div className={sender === 'user' ?
+      'chat-message-user':
+      'chat-message-bot'}>
       {sender === "bot" && (
-        <img src="./src/assets/botphoto.png" width="50"/>
+        <img src="./src/assets/botphoto.png" className='chat-message-profile'/>
         )}
-      {message}
+        <div className='chat-message-text'>
+          {message}
+        </div>
       {sender === "user" && (
-        <img src="./src/assets/user.jpg" width="50"/>
+        <img src="./src/assets/user.jpg" className='chat-message-profile'/>
         )}
     </div>
   ) 
@@ -64,7 +68,7 @@ function ChatMessage({message, sender})
 
 function ChatMessages({ chatMessages }) {
   return (
-    <>
+    <div className='chat-messages-container'>
     {
     chatMessages.map((chat) => {
     return (
@@ -76,7 +80,7 @@ function ChatMessages({ chatMessages }) {
     )
     })
     }
-    </>
+    </div>
   )
 }
 
@@ -105,15 +109,16 @@ function App() {
   ]);
   // (Array Destructure) const [chatMessages, setChatMessages] = array;
   return (
-    <div>
+    <div className='app-container'>
+      <ChatMessages 
+      chatMessages={chatMessages}
+      />
       <ChatInput 
       chatMessages={chatMessages}
       setChatMessages={setChatMessages}
       />
-      <ChatMessages 
-      chatMessages={chatMessages}
-      />
     </div>
+
   );
 }
 export {ChatInput, ChatMessage};
