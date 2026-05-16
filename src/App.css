@@ -1,0 +1,14 @@
+
+.app-container {
+    max-width: 750px;
+    margin: 0 auto;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.welcome-message {
+    text-align: center;
+    color: #555;
+    opacity: 0.9;
+}
