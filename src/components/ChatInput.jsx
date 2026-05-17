@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import './ChatInput.css';
+import '../backend/chatbot';
 function ChatInput({ chatMessages, setChatMessages }) {
   const [inputText, setInputText] = useState('');
   function sendMessage (){
