@@ -1,4 +1,6 @@
 import './ChatMessage.css';
+import userImg from '../assets/user.png';
+import botImg from '../assets/bot.png';
 function ChatMessage({message, sender})
 {
     return (
@@ -6,13 +8,13 @@ function ChatMessage({message, sender})
       'chat-message-user':
       'chat-message-bot'}>
       {sender === "bot" && (
-        <img src="./src/assets/bot.png" alt="friendly chatbot avatar in a chat interface" className='chat-message-profile'/>
+        <img src={botImg} alt="friendly chatbot avatar in a chat interface" className='chat-message-profile'/>
         )}
         <div className='chat-message-text'>
           {message}
         </div>
       {sender === "user" && (
-        <img src="./src/assets/user.png" alt="user avatar in a chat interface" className='chat-message-profile'/>
+        <img src={userImg} alt="user avatar in a chat interface" className='chat-message-profile'/>
         )}
     </div>
   ) 
