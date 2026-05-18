@@ -11,9 +11,7 @@ A modern chatbot interface built with React and JavaScript featuring a clean dar
 - Simple chatbot logic
 - Component-based structure
 ## Demo
-```
-![alt text](image.png)
-```
+![alt text](image-1.png)
 ## Tech Stack
 
 - React
