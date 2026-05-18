@@ -202,3 +202,4 @@ function uuidPolyfill() {
 }(typeof self !== 'undefined' ? self : this, function () {
   return Chatbot;
 }));
+export default Chatbot;

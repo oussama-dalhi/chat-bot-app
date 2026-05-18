@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import './ChatInput.css';
-import '../backend/chatbot';
+import Chatbot from '../backend/chatbot';
 function ChatInput({ chatMessages, setChatMessages }) {
   const [inputText, setInputText] = useState('');
   function sendMessage (){
@@ -13,7 +13,7 @@ function ChatInput({ chatMessages, setChatMessages }) {
           }
         ];
     setChatMessages(newChatMessages);
-    const response = window.Chatbot.getResponse(inputText);
+    const response = Chatbot.getResponse(inputText);
     // use updated copy to rerender
       setChatMessages([
       ...newChatMessages,
