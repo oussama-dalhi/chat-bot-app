@@ -10,8 +10,11 @@ A modern chatbot interface built with React and JavaScript featuring a clean dar
 - Responsive dark UI
 - Simple chatbot logic
 - Component-based structure
+
 ## Demo
-![alt text](image-1.png)
+
+![Preview](./src/assets/demo.png)
+
 ## Tech Stack
 
 - React
@@ -28,3 +31,4 @@ cd react-chatbot-ui
 npm install
 
 npm run dev
+```
