@@ -26,7 +26,7 @@ A modern chatbot interface built with React and JavaScript featuring a clean dar
 ```bash
 git clone https://github.com/oussama-dalhi/chat-bot-app.git
 
-cd react-chatbot-ui
+cd chatbot
 
 npm install
 
