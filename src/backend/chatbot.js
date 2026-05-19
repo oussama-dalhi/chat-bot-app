@@ -14,17 +14,7 @@ const Chatbot = {
       const diceResult = Math.floor(Math.random() * 6) + 1;
       return `Sure! You got ${diceResult}`;
     },
-    'what is the date today': function () {
-      const now = new Date();
-      const months = [
-        'January', 'February', 'March', 'April', 'May', 'June',
-        'July', 'August', 'September', 'October', 'November', 'December'
-      ];
-      const month = months[now.getMonth()];
-      const day = now.getDate();
-
-      return `Today is ${month} ${day}`;
-    },
+    'react': 'React is a JavaScript library for building interfaces.',
     'thank': 'No problem! Let me know if you need help with anything else!',
     'tell me a joke': function () {
     const jokes = [
@@ -45,16 +35,10 @@ const Chatbot = {
     const randomIndex = Math.floor(Math.random() * jokes.length);
     return jokes[randomIndex];
     },
-    'what time is it': function () {
-     return `Now in Tetouan its ${new Date().toLocaleTimeString()}`;
-   },
   },
 
   additionalResponses: {},
-
-  unsuccessfulResponse: `Sorry, I didn't quite understand that. Currently, I only know how to flip a coin, roll a dice, or get today's date. Let me know how I can help!`,
-
-  emptyMessageResponse: `Sorry, it looks like your message is empty. Please make sure you send a message and I will give you a response.`,
+  unsuccessfulResponse: `Sorry, I didn't quite understand that. Let me know how I can help with something else!`,
 
   addResponses: function (additionalResponses) {
     this.additionalResponses = {
@@ -64,13 +48,15 @@ const Chatbot = {
   },
   
   getResponse: function (message) {
+    message = message.toLowerCase();
     // handle mathematical operations
     if (/^[0-9+\-*/().×÷ ]+$/.test(message)) {
       try {
         const normalized = message
         .replace(/×/g, '*')
         .replace(/÷/g, '/')
-        .replace(/−/g, '-');
+        .replace(/−/g, '-')
+        .replace(/,/g, '.');
       return eval(normalized);
       } 
       // eslint-disable-next-line no-unused-vars
@@ -81,7 +67,63 @@ const Chatbot = {
     if (!message) {
       return this.emptyMessageResponse;
     }
+    if(message.includes('date'))
+    {
+      return `Today is ${new Date().toLocaleDateString('en-US', {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric'
+      })}`;
+    }
+    if(message.includes('time'))
+    {
+      const currentTime = new Date().toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+     return `Current time: ${currentTime}`;
+    }
+   const keywordResponses = [
+  {
+    keywords: ['react'],
+    response: 'React is a JavaScript library.'
+  },
 
+  {
+    keywords: ['javascript', 'js'],
+    response: 'JavaScript powers interactive websites.'
+  },
+  {
+    keywords: ['morning'],
+    response: 'Good morning!'
+  },
+  {
+    keywords: ['night'],
+    response: 'Good night!'
+  },
+  {
+    keywords: ['css'],
+    response: 'CSS (Cascading Styling Sheet) styles web pages.'
+  },
+  {
+    keywords: ['frontend'],
+    response: 'Frontend development focuses on the user interface.'
+  },
+
+  {
+    keywords: ['your name', 'who are you'],
+    response: 'I am Chatbot! made by Oussama Dalhi!'
+  }
+];
+
+   for (const item of keywordResponses) {
+    const matched = item.keywords
+                  .some((keyword) => message.includes(keyword));
+    // function response
+    if(matched) {
+      return item.response;
+    }
+   }
     // This spread operator (...) combines the 2 objects.
     const responses = {
       ...this.defaultResponses,
