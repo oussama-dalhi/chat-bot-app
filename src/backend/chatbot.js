@@ -67,7 +67,11 @@ const Chatbot = {
     // handle mathematical operations
     if (/^[0-9+\-*/().×÷ ]+$/.test(message)) {
       try {
-      return eval(message);
+        const normalized = message
+        .replace(/×/g, '*')
+        .replace(/÷/g, '/')
+        .replace(/−/g, '-');
+      return eval(normalized);
       } 
       // eslint-disable-next-line no-unused-vars
       catch (e) {
