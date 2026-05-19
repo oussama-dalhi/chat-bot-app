@@ -66,8 +66,14 @@ const Chatbot = {
   getResponse: function (message) {
     // handle mathematical operations
     if (/^[0-9+\-*/(). ]+$/.test(message)) {
-  return 'Calculator feature disabled temporarily';
-  }
+      try {
+      return eval(message);
+      } 
+      // eslint-disable-next-line no-unused-vars
+      catch (e) {
+        return 'Invalid Mathematical Expression';
+      }
+    }
     if (!message) {
       return this.emptyMessageResponse;
     }
