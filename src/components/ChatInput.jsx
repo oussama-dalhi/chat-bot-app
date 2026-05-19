@@ -4,6 +4,7 @@ import Chatbot from '../backend/chatbot';
 function ChatInput({ chatMessages, setChatMessages }) {
   const [inputText, setInputText] = useState('');
   function sendMessage (){
+     if (!inputText.trim()) return;
     const newChatMessages = [
           ...chatMessages,
           {
@@ -13,7 +14,13 @@ function ChatInput({ chatMessages, setChatMessages }) {
           }
         ];
     setChatMessages(newChatMessages);
-    const response = Chatbot.getResponse(inputText);
+    let response;
+    try {
+      response = Chatbot.getResponse(inputText);
+    } catch(e) {
+      console.error(e);
+     response = 'Something went wrong.';
+    }
     // use updated copy to rerender
       setChatMessages([
       ...newChatMessages,
