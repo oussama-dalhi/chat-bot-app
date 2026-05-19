@@ -3,10 +3,11 @@
     max-width: 750px;
     width: 100%;
     margin: 0 auto;
-    min-height: 100dvh;
+    height: 100dvh;
     display: flex;
     flex-direction: column;
     background-color: #161A22;
+    overflow: hidden;
 }
 
 .welcome-message {
