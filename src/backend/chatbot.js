@@ -65,7 +65,7 @@ const Chatbot = {
   
   getResponse: function (message) {
     // handle mathematical operations
-    if (/^[0-9+\-*/(). ]+$/.test(message)) {
+    if (/^[0-9+\-*/().×÷ ]+$/.test(message)) {
       try {
       return eval(message);
       } 
