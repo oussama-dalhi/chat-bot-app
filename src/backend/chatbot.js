@@ -124,7 +124,7 @@ const Chatbot = {
         .replace(/÷/g, '/')
         .replace(/−/g, '-')
         .replace(/,/g, '.');
-      return eval(normalized);
+      return Function(`"use strict"; return (${normalized})`)();
       } 
       // eslint-disable-next-line no-unused-vars
       catch (e) {
