@@ -1,89 +1,4 @@
-const Chatbot = {
-  defaultResponses: {
-    'hello hi': `Hello! How can I help you?`,
-    'how are you': `I'm doing great! How can I help you?`,
-    'flip a coin': function () {
-      const randomNumber = Math.random();
-      if (randomNumber < 0.5) {
-        return 'Sure! You got heads';
-      } else {
-        return 'Sure! You got tails';
-      }
-    },
-    'roll a dice': function() {
-      const diceResult = Math.floor(Math.random() * 6) + 1;
-      return `Sure! You got ${diceResult}`;
-    },
-    'react': 'React is a JavaScript library for building interfaces.',
-    'thank': 'No problem! Let me know if you need help with anything else!',
-    'tell me a joke': function () {
-    const jokes = [
-        'Why do programmers hate bugs? Because they take forever to fix.',
-        'Why did JavaScript go to therapy? Too many callbacks.',
-        'I would tell you a UDP joke, but you might not get it.',
-        'Why do programmers hate nature? It has too many bugs.',
-        'Why did the developer go broke? Because he used up all his cache.',
-        'Why was JavaScript so calm? Because it had no class.',
-        'Why do programmers prefer dark mode? Because light attracts bugs.',
-        'Why did the computer get cold? It forgot to close its Windows.',
-        'Why was the function sad? Because nobody called it.',
-        'Why did the array break up with the object? Too many keys.',
-        'Why do Java developers wear glasses? Because they do not C#.',
-        'Why did the CSS developer cry? Because everything was out of alignment.',
-        'Why was the React developer relaxed? Because everything was under control with state.'
-    ];
-    const randomIndex = Math.floor(Math.random() * jokes.length);
-    return jokes[randomIndex];
-    },
-  },
-
-  additionalResponses: {},
-  unsuccessfulResponse: `Sorry, I didn't quite understand that. Let me know how I can help with something else!`,
-
-  addResponses: function (additionalResponses) {
-    this.additionalResponses = {
-      ...this.additionalResponses,
-      ...additionalResponses
-    };
-  },
-  
-  getResponse: function (message) {
-    message = message.toLowerCase();
-    // handle mathematical operations
-    if (/^[0-9+\-*/().×÷ ]+$/.test(message)) {
-      try {
-        const normalized = message
-        .replace(/×/g, '*')
-        .replace(/÷/g, '/')
-        .replace(/−/g, '-')
-        .replace(/,/g, '.');
-      return eval(normalized);
-      } 
-      // eslint-disable-next-line no-unused-vars
-      catch (e) {
-        return 'Invalid Mathematical Expression';
-      }
-    }
-    if (!message) {
-      return this.emptyMessageResponse;
-    }
-    if(message.includes('date'))
-    {
-      return `Today is ${new Date().toLocaleDateString('en-US', {
-      month: 'long',
-      day: 'numeric',
-      year: 'numeric'
-      })}`;
-    }
-    if(message.includes('time'))
-    {
-      const currentTime = new Date().toLocaleTimeString([], {
-        hour: '2-digit',
-        minute: '2-digit'
-      });
-     return `Current time: ${currentTime}`;
-    }
-   const keywordResponses = [
+ const keywordResponses = [
   {
     keywords: ['react'],
     response: 'React is a JavaScript library.'
@@ -113,20 +28,128 @@ const Chatbot = {
   {
     keywords: ['your name', 'who are you'],
     response: 'I am Chatbot! made by Oussama Dalhi!'
+  },
+  {
+    keywords: ['hey', 'hi', 'hello'],
+    response: 'Hello! How can I help you?'
+  },
+  {
+    keywords: ['time', 'hour', 'clock'],
+    response: function() {
+        const currentTime = new Date().toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit'
+        });
+        return `Current time: ${currentTime}`;
+    }
+  },
+  {
+    keywords: ['date', 'calender', 'today'],
+    response: function() {
+      return `Today is ${new Date().toLocaleDateString('en-US', {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric'
+      })}`;
+    }
+  },
+  {
+    keywords: ['thanks', 'thank'],
+    response: 'No problem! Let me know if you need help with anything else!'
+  },
+  {
+    keywords: ['how are you'],
+    response: 'I am doing great! How can I help you?'
+  },
+  {
+    keywords: ['coin'],
+    response: function () {
+      const randomNumber = Math.random();
+      if (randomNumber < 0.5) {
+        return 'Sure! You got heads';
+      } else {
+        return 'Sure! You got tails';
+      }
+    }
+  },
+  {
+    keywords: ['dice'],
+    response: function() {
+      const diceResult = Math.floor(Math.random() * 6) + 1;
+      return `Sure! You got ${diceResult}`;
+    }
+  },
+  {
+    keywords: ['joke', 'funny'],
+    response: function () {
+    const jokes = [
+        'Why do programmers hate bugs? Because they take forever to fix.',
+        'Why did JavaScript go to therapy? Too many callbacks.',
+        'I would tell you a UDP joke, but you might not get it.',
+        'Why do programmers hate nature? It has too many bugs.',
+        'Why did the developer go broke? Because he used up all his cache.',
+        'Why was JavaScript so calm? Because it had no class.',
+        'Why do programmers prefer dark mode? Because light attracts bugs.',
+        'Why did the computer get cold? It forgot to close its Windows.',
+        'Why was the function sad? Because nobody called it.',
+        'Why did the array break up with the object? Too many keys.',
+        'Why do Java developers wear glasses? Because they do not C#.',
+        'Why did the CSS developer cry? Because everything was out of alignment.',
+        'Why was the React developer relaxed? Because everything was under control with state.'
+    ];
+      const randomIndex = Math.floor(Math.random() * jokes.length);
+      return jokes[randomIndex];
+    }
   }
 ];
+const Chatbot = {
+  additionalResponses: {},
+  unsuccessfulResponse: `Sorry, I didn't quite understand that. Let me know how I can help with something else!`,
+
+  addResponses: function (additionalResponses) {
+    this.additionalResponses = {
+      ...this.additionalResponses,
+      ...additionalResponses
+    };
+  },
+    
+  
+  getResponse: function (message) {
+    message = message.toLowerCase().trim();
+    // handle mathematical operations
+    if (/^[0-9+\-*/().×÷ ]+$/.test(message)) {
+      try {
+        const normalized = message
+        .replace(/×/g, '*')
+        .replace(/÷/g, '/')
+        .replace(/−/g, '-')
+        .replace(/,/g, '.');
+      return eval(normalized);
+      } 
+      // eslint-disable-next-line no-unused-vars
+      catch (e) {
+        return 'Invalid Mathematical Expression';
+      }
+    }
+    if (!message) {
+      return this.emptyMessageResponse;
+    }
+
 
    for (const item of keywordResponses) {
     const matched = item.keywords
                   .some((keyword) => message.includes(keyword));
     // function response
     if(matched) {
+      if(typeof(item.response) === 'function')
+      {
+        return item.response();
+      }
       return item.response;
     }
    }
     // This spread operator (...) combines the 2 objects.
     const responses = {
-      ...this.defaultResponses,
       ...this.additionalResponses,
     };
 
