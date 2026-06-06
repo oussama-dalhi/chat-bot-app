@@ -106,12 +106,7 @@ const Chatbot = {
   additionalResponses: {},
   unsuccessfulResponse: `Sorry, I didn't quite understand that. Let me know how I can help with something else!`,
 
-  addResponses: function (additionalResponses) {
-    this.additionalResponses = {
-      ...this.additionalResponses,
-      ...additionalResponses
-    };
-  },
+
     
   
   getResponse: function (message) {
@@ -126,19 +121,15 @@ const Chatbot = {
         .replace(/,/g, '.');
       return Function(`"use strict"; return (${normalized})`)();
       } 
-      // eslint-disable-next-line no-unused-vars
       catch (e) {
-        return 'Invalid Mathematical Expression';
+        console.error(e);
       }
     }
-    if (!message) {
-      return this.emptyMessageResponse;
-    }
-
 
    for (const item of keywordResponses) {
     const matched = item.keywords
                   .some((keyword) => message.includes(keyword));
+    
     // function response
     if(matched) {
       if(typeof(item.response) === 'function')

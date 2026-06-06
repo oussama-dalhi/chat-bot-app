@@ -19,7 +19,7 @@ function ChatInput({ chatMessages, setChatMessages }) {
       response = Chatbot.getResponse(inputText);
     } catch(e) {
       console.error(e);
-     response = 'Something went wrong.';
+     response = 'Sorry, I did not quite understand that. Let me know how I can help with something else!';
     }
     // use updated copy to rerender
       setChatMessages([
